@@ -12,4 +12,9 @@ class Gender extends Model
     protected $fillable = ['description'];
 
     public $timestamps = false;
+
+    public function capitalizedDescription(): string
+    {
+        return ucwords($this->description);
+    }
 }

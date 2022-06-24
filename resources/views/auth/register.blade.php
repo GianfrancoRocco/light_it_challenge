@@ -19,6 +19,33 @@
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
             </div>
 
+            <!-- Last Name -->
+            <div class="mt-4">
+                <x-label for="last_name" :value="__('Last Name')" />
+
+                <x-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required />
+            </div>
+
+            <!-- Birthdate -->
+            <div class="mt-4">
+                <x-label for="birthdate" :value="__('Birthdate')" />
+
+                <x-input id="birthdate" class="block mt-1 w-full" type="date" name="birthdate" :value="old('birthdate')" required />
+            </div>
+
+            <!-- Gender -->
+            <div class="mt-4">
+                <x-label for="gender_id" :value="__('Gender')" />
+
+                <x-select class="block mt-1 w-full" name="gender_id" id="gender_id">
+                    <x-slot name="content">
+                        @foreach($genders as $gender)
+                            <option value="{{$gender->id}}">{{$gender->capitalizedDescription()}}</option>
+                        @endforeach
+                    </x-slot>
+                </x-select>
+            </div>
+
             <!-- Email Address -->
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />
