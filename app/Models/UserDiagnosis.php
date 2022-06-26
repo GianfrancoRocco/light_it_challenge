@@ -24,4 +24,11 @@ class UserDiagnosis extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function displayWhenMarkedAsCorrect(): string
+    {
+        $updatedAt = $this->updated_at;
+
+        return "Marked as correct on {$updatedAt->format('m/d/Y')} at {$updatedAt->format('h:i A')}";
+    }
 }

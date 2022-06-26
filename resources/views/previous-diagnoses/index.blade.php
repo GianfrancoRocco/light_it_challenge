@@ -36,7 +36,7 @@
                                         </x-button>
                                     </form>
                                 @else
-                                    Marked as correct on {{$diagnosis->updated_at->format('m/d/Y H:i')}}
+                                    {{$diagnosis->displayWhenMarkedAsCorrect()}}
                                 @endif
                             </td>
                             <td class="px-6 py-4">
