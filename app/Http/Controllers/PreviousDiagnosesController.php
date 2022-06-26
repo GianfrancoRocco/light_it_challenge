@@ -20,9 +20,11 @@ class PreviousDiagnosesController extends Controller
         ]);
     }
 
-    public function edit(UserDiagnosis $userDiagnosis)
+    public function edit(UserDiagnosis $userDiagnosis): View
     {
-        //
+        return view('previous-diagnoses.edit', [
+            'userDiagnosis' => $userDiagnosis
+        ]);
     }
 
     public function update(Request $request, UserDiagnosis $userDiagnosis)
