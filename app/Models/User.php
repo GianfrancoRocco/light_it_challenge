@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserDiagnosis::class);
     }
+
+    public function diagnosesOrderedBy(string $orderBy, string $typeOfOrder)
+    {
+        return $this->diagnoses()->orderBy($orderBy, $typeOfOrder)->get();
+    }
 }

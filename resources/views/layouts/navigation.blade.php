@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('diagnosis.index')" :active="request()->routeIs('diagnosis.index')">
                         {{ __('Diagnosis') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('previous-diagnoses.index')" :active="request()->routeIs('previous-diagnoses.index')">
+                        {{ __('Previous Diagnoses') }}
+                    </x-nav-link>
                 </div>
             </div>
 

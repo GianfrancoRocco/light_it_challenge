@@ -13,11 +13,17 @@ class UserDiagnosis extends Model
     protected $fillable = ['user_id','diagnosis','is_correct'];
 
     protected $casts = [
-        'diagnosis' => 'array'
+        'diagnosis' => 'array',
+        'created_at' => 'datetime'
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function isMarkedAsCorrect(): string
+    {
+        return $this->is_correct ? 'Yes' : 'No';
     }
 }

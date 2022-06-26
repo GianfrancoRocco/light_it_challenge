@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\DiagnosisController;
+use App\Http\Controllers\PreviousDiagnosesController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -60,5 +61,13 @@ Route::middleware('auth')->group(function () {
     ->group(function () {
         Route::get('', 'index')->name('diagnosis.index');
         Route::post('', 'diagnose')->name('diagnosis.diagnose');
+    });
+
+    Route::controller(PreviousDiagnosesController::class)
+    ->prefix('previous-diagnoses')
+    ->group(function () {
+        Route::get('', 'index')->name('previous-diagnoses.index');
+        Route::get('/{userDiagnosis}', 'edit')->name('previous-diagnoses.edit');
+        Route::patch('/{userDiagnosis}', 'update')->name('previous-diagnoses.update');
     });
 });
