@@ -68,6 +68,6 @@ Route::middleware('auth')->group(function () {
     ->group(function () {
         Route::get('', 'index')->name('previous-diagnoses.index');
         Route::get('/{userDiagnosis}', 'edit')->name('previous-diagnoses.edit');
-        Route::patch('/{userDiagnosis}', 'update')->name('previous-diagnoses.update');
+        Route::post('mark-as-correct/{userDiagnosis}', 'markAsCorrect')->name('previous-diagnoses.mark-as-correct');
     });
 });

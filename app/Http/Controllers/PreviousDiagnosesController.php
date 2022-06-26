@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserDiagnosis;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class PreviousDiagnosesController extends Controller
@@ -27,8 +27,10 @@ class PreviousDiagnosesController extends Controller
         ]);
     }
 
-    public function update(Request $request, UserDiagnosis $userDiagnosis)
+    public function markAsCorrect(UserDiagnosis $userDiagnosis): RedirectResponse
     {
-        //
+        $userDiagnosis->update(['marked_as_correct' => true]);
+
+        return redirect()->back()->with('success', 'Diagnosis marked as correct');
     }
 }

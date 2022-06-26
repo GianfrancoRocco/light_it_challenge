@@ -10,20 +10,18 @@ class UserDiagnosis extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','diagnosis','is_correct'];
+    protected $table = 'user_diagnosis';
+
+    protected $fillable = ['user_id','diagnosis','marked_as_correct'];
 
     protected $casts = [
         'diagnosis' => 'array',
-        'created_at' => 'datetime'
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function isMarkedAsCorrect(): string
-    {
-        return $this->is_correct ? 'Yes' : 'No';
     }
 }
