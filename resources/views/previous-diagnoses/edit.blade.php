@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <a href="{{route('previous-diagnoses.index')}}">{{ __('Previous Diagnoses') }}</a> / {{$userDiagnosis->id}}
+            <a href="{{url()->previous()}}">{{ __('Previous Diagnoses') }}</a> / {{$userDiagnosis->id}}
         </h2>
     </x-slot>
 

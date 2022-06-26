@@ -16,7 +16,7 @@ class PreviousDiagnosesController extends Controller
     public function index(): View
     {
         return view('previous-diagnoses.index', [
-            'diagnoses' => auth()->user()->diagnosesOrderedBy('id', 'desc')
+            'diagnoses' => auth()->user()->diagnosesOrderedBy('id', 'desc')->paginate()
         ]);
     }
 

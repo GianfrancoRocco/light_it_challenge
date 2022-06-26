@@ -15,7 +15,7 @@
 
             <h2 class="text-xl mb-4">History of previous diagnoses</h2>
 
-            <table class="w-full text-sm text-gray-500 dark:text-gray-400 previous-diagnoses-table border">
+            <table class="w-full text-sm text-gray-500 dark:text-gray-400 previous-diagnoses-table border mb-4">
                 <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th class="px-6 py-4">Date of diagnosis</th>
@@ -50,6 +50,8 @@
                     @endforelse
                 </tbody>
             </table>
+
+            {{$diagnoses->links()}}
         </div>
     </div>
 </x-app-layout>
