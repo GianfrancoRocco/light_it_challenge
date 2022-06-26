@@ -31,7 +31,7 @@ class DiagnosisController extends Controller
             return redirect()->route('diagnosis.index')->withErrors('No diagnoses found based on the selected symptoms');
         }
 
-        return view('diagnosis.diagnoses', [
+        return view('diagnosis.result', [
             'diagnoses' => $diagnoses
         ]);
     }
