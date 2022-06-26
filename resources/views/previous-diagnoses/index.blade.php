@@ -7,12 +7,6 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if(session('success'))
-                <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
-                    <span class="font-medium">{{session('success')}}</span>
-                </div>
-            @endif
-
             <h2 class="text-xl mb-4">History of previous diagnoses</h2>
 
             <table class="w-full text-sm text-gray-500 dark:text-gray-400 previous-diagnoses-table border mb-4">
@@ -40,7 +34,7 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4">
-                                <x-link :href="route('previous-diagnoses.edit', [$diagnosis])">Check diagnosis</x-link>
+                                <x-link :href="route('previous-diagnoses.show', [$diagnosis])">Check diagnosis</x-link>
                             </td>
                         </tr>
                     @empty

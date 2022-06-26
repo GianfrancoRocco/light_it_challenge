@@ -67,7 +67,7 @@ Route::middleware('auth')->group(function () {
     ->prefix('previous-diagnoses')
     ->group(function () {
         Route::get('', 'index')->name('previous-diagnoses.index');
-        Route::get('/{userDiagnosis}', 'edit')->name('previous-diagnoses.edit');
+        Route::get('/{userDiagnosis}', 'show')->name('previous-diagnoses.show');
         Route::post('mark-as-correct/{userDiagnosis}', 'markAsCorrect')->name('previous-diagnoses.mark-as-correct');
     });
 });

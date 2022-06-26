@@ -20,17 +20,21 @@ class PreviousDiagnosesController extends Controller
         ]);
     }
 
-    public function edit(UserDiagnosis $userDiagnosis): View
+    public function show(UserDiagnosis $userDiagnosis): View
     {
-        return view('previous-diagnoses.edit', [
+        $this->authorize('view', $userDiagnosis);
+
+        return view('previous-diagnoses.show', [
             'userDiagnosis' => $userDiagnosis
         ]);
     }
 
     public function markAsCorrect(UserDiagnosis $userDiagnosis): RedirectResponse
     {
+        $this->authorize('update', $userDiagnosis);
+
         $userDiagnosis->update(['marked_as_correct' => true]);
 
-        return redirect()->back()->with('success', 'Diagnosis marked as correct');
+        return redirect()->back();
     }
 }
