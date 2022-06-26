@@ -24,7 +24,7 @@ class RegisteredUserController extends Controller
             return Gender::all();
         });
 
-        return view('auth.register')->with([
+        return view('auth.register', [
             'genders' => $genders
         ]);
     }
