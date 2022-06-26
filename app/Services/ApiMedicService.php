@@ -53,7 +53,9 @@ class ApiMedicService
 
         $response = $this->httpRequest('get', 'diagnosis', $params);
 
-        UserDiagnosis::create(['diagnosis' => $response]);
+        if (count($response)) {
+            UserDiagnosis::create(['diagnosis' => $response]);
+        }
 
         return $response;
     }
