@@ -19,7 +19,7 @@
                 <tbody>
                     @foreach($diagnoses as $diagnosis)
                         @php
-                            $createdAt = $diagnosis->created_at->format('m/d/Y H:i');
+                            $createdAt = $diagnosis->created_at->format('m/d/Y h:i A');
                         @endphp
                         <tr class="bg-white border-b border-t dark:border-gray-700">
                             <td class="px-4 py-2">{{$createdAt}}</td>
