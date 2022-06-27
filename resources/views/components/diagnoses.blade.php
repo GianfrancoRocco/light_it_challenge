@@ -6,7 +6,7 @@
     @endphp
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4">
         <div class="p-6 bg-white border-b border-gray-200">
-            <p>Diagnosis #{{$loop->iteration}}: {{$issue['Name']}}</p>
+            <p>Diagnosis #{{$loop->iteration}}: {{$issue['Name']}} (or {{$issue['ProfName']}})</p>
             <p>ICD Name: {{$issue['IcdName']}}</p>
             <p>Level of accuracy:</p>
             <div class="pie animate no-round" style="--p:{{$accuracy}};--c:lightgreen"> {{$accuracy}}%</div>
