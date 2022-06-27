@@ -75,3 +75,7 @@ ul.specialisations-list {
 .previous-diagnoses-table thead th {
     text-align: left;
 }
+
+.table-icon-button {
+    width: 20px;
+}
