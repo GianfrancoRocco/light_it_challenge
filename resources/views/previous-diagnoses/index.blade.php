@@ -18,14 +18,17 @@
                 </thead>
                 <tbody>
                     @foreach($diagnoses as $diagnosis)
+                        @php
+                            $createdAt = $diagnosis->created_at->format('m/d/Y H:i');
+                        @endphp
                         <tr class="bg-white border-b border-t dark:border-gray-700">
-                            <td class="px-4 py-2">{{$diagnosis->created_at->format('m/d/Y H:i')}}</td>
+                            <td class="px-4 py-2">{{$createdAt}}</td>
                             <td class="px-4 py-2">
                                 <div>
                                     @if(!$diagnosis->marked_as_correct)
                                         <form action="{{route('previous-diagnoses.mark-as-correct', [$diagnosis])}}" method="POST">
                                             @csrf
-                                            <x-button>
+                                            <x-button onclick="confirm('Mark diagnosis from date {{$createdAt}} as correct?')">
                                                 Mask as correct
                                             </x-button>
                                         </form>
