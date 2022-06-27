@@ -13,7 +13,7 @@
             
             @if (count($specialisations))
                 <p>Specialisations:</p>
-                <ul class="specialisations-list">
+                <ul class="ul-list">
                     @foreach($specialisations as $specialisation)
                         <li>{{$specialisation['Name']}}</li>
                     @endforeach

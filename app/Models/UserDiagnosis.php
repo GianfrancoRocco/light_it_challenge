@@ -12,10 +12,11 @@ class UserDiagnosis extends Model
 
     protected $table = 'user_diagnosis';
 
-    protected $fillable = ['user_id','diagnosis','marked_as_correct'];
+    protected $fillable = ['user_id','selected_symptoms','diagnosis','marked_as_correct'];
 
     protected $casts = [
         'diagnosis' => 'array',
+        'selected_symptoms' => 'array',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

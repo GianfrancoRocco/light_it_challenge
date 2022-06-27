@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\Http;
 class ApiMedicService 
 {
     private int $authTokenValidThrough;
-    private array $apiMedicConfig;
+    private array $apiMedicConfig, $selectedSymptoms;
 
     public function __construct()
     {
         $this->apiMedicConfig = config('api-medic');
         $this->authTokenValidThrough = 7200;
+        $this->selectedSymptoms = [];
     }
 
     private function getAuthToken(): string
@@ -59,10 +60,23 @@ class ApiMedicService
         $response = $this->httpRequest('get', 'diagnosis', $params);
 
         if (count($response)) {
-            UserDiagnosis::create(['diagnosis' => $response]);
+            $this->selectedSymptoms = collect($this->getSymptoms())
+            ->filter(fn ($symptom) => in_array($symptom['ID'], $symptoms))
+            ->values()
+            ->toArray();
+
+            UserDiagnosis::create([
+                'selected_symptoms' => $this->selectedSymptoms,
+                'diagnosis' => $response,
+            ]);
         }
 
         return $response;
+    }
+
+    public function getSelectedSymptoms(): array
+    {
+        return $this->selectedSymptoms;
     }
 
     private function getEndpointURL(string $endpoint): string

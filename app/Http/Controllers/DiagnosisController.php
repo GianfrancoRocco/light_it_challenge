@@ -32,7 +32,8 @@ class DiagnosisController extends Controller
         }
 
         return view('diagnosis.result', [
-            'diagnoses' => $diagnoses
+            'diagnoses' => $diagnoses,
+            'selectedSymptoms' => $this->apiMedicService->getSelectedSymptoms()
         ]);
     }
 }
