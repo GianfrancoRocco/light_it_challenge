@@ -5,9 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <x-diagnoses :diagnoses="$userDiagnosis->diagnosis" />
-        </div>
-    </div>
+    <x-main-container>
+        <x-diagnoses :diagnoses="$userDiagnosis->diagnosis" />
+    </x-main-container>
 </x-app-layout>

@@ -5,11 +5,9 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <h2 class="text-xl">Possible diagnoses based on selected symptoms</h2>
+    <x-main-container>
+        <h2 class="text-xl">Possible diagnoses based on selected symptoms</h2>
 
-            <x-diagnoses :diagnoses="$diagnoses" />
-        </div>
-    </div>
+        <x-diagnoses :diagnoses="$diagnoses" />
+    </x-main-container>
 </x-app-layout>
