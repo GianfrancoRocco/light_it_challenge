@@ -47,8 +47,10 @@ class ApiMedicService
         });
     }
 
-    public function getDiagnosis(array $symptoms, User $user): mixed
+    public function getDiagnosis(array $symptoms): mixed
     {
+        $user = auth()->user();
+
         $implodedSymptoms = implode(',', $symptoms);
         
         $params = [

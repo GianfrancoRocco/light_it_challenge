@@ -25,7 +25,7 @@ class DiagnosisController extends Controller
 
     public function diagnose(DiagnoseRequest $request): View|RedirectResponse
     {
-        $diagnoses = $this->apiMedicService->getDiagnosis($request->get('symptoms'), $request->user());
+        $diagnoses = $this->apiMedicService->getDiagnosis($request->get('symptoms'));
 
         if (!count($diagnoses)) {
             return redirect()->route('diagnosis.index')->withErrors('No diagnoses found based on the selected symptoms');
