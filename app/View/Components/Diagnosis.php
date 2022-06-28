@@ -4,18 +4,18 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class Diagnoses extends Component
+class Diagnosis extends Component
 {
-    public array $diagnoses;
+    public array $diagnosis;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(array $diagnoses)
+    public function __construct(array $diagnosis)
     {
-        $this->diagnoses = $diagnoses;
+        $this->diagnosis = $diagnosis;
     }
 
     /**
@@ -25,6 +25,6 @@ class Diagnoses extends Component
      */
     public function render()
     {
-        return view('components.diagnoses');
+        return view('components.diagnosis');
     }
 }

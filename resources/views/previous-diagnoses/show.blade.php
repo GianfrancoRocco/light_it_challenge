@@ -8,6 +8,6 @@
     <x-main-container>
         <x-selected-symptoms :symptoms="$userDiagnosis->selected_symptoms"/>
 
-        <x-diagnoses :diagnoses="$userDiagnosis->diagnosis" />
+        <x-diagnosis :diagnosis="$userDiagnosis->diagnosis" />
     </x-main-container>
 </x-app-layout>

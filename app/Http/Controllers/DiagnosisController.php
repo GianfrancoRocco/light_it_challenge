@@ -39,14 +39,14 @@ class DiagnosisController extends Controller
         $errorMessage = '';
 
         try {
-            $diagnoses = $this->apiMedicService->getDiagnosis($request->get('symptoms'));
+            $diagnosis = $this->apiMedicService->getDiagnosis($request->get('symptoms'));
     
-            if (!count($diagnoses)) {
-                throw new ApiMedicException('No diagnoses found based on the selected symptoms');
+            if (!count($diagnosis)) {
+                throw new ApiMedicException('No diagnosis found based on the selected symptoms');
             }
 
             return view('diagnosis.result', [
-                'diagnoses' => $diagnoses,
+                'diagnosis' => $diagnosis,
                 'selectedSymptoms' => $this->apiMedicService->getSelectedSymptoms()
             ]);
         } catch (ApiMedicException $e) {

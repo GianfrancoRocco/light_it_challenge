@@ -58,7 +58,7 @@ class DiagnosisTest extends TestCase
         ->assertViewIs('diagnosis.result')
         ->assertViewHasAll([
             'selectedSymptoms' => $this->symptoms->toArray(),
-            'diagnoses' => $this->diagnosis
+            'diagnosis' => $this->diagnosis
         ]);
 
         $this->assertDatabaseHas('user_diagnosis', [
@@ -91,7 +91,7 @@ class DiagnosisTest extends TestCase
         ]);
     }
 
-    public function test_can_render_previous_diagnoses_view_when_having_a_previous_diagnoses()
+    public function test_can_render_previous_i_view_when_having_a_previous_diagnoses()
     {
         $user = User::factory()->create();
 
@@ -198,7 +198,7 @@ class DiagnosisTest extends TestCase
         $this->assertDatabaseHas('user_diagnosis', [
             'id' => $previousDiagnosis->id,
             'user_id' => $user->id,
-            'marked_as_correct' => null
+            'marked_as_correct' => false
         ]);
 
         $this->post(route('previous-diagnoses.mark-as-correct', [
@@ -227,11 +227,13 @@ class DiagnosisTest extends TestCase
 
         $previousDiagnosis = $user2->diagnoses()->latest()->first();
 
-        $this->assertDatabaseHas('user_diagnosis', [
+        $stateBeforeMarkAsCorrectAttempt = [
             'id' => $previousDiagnosis->id,
             'user_id' => $user2->id,
-            'marked_as_correct' => null
-        ]);
+            'marked_as_correct' => false
+        ];
+
+        $this->assertDatabaseHas('user_diagnosis', $stateBeforeMarkAsCorrectAttempt);
 
         $response = $this->actingAs($user1)
         ->post(route('previous-diagnoses.mark-as-correct', [
@@ -240,11 +242,7 @@ class DiagnosisTest extends TestCase
 
         $response->assertForbidden();
 
-        $this->assertDatabaseHas('user_diagnosis', [
-            'id' => $previousDiagnosis->id,
-            'user_id' => $user2->id,
-            'marked_as_correct' => null
-        ]);
+        $this->assertDatabaseHas('user_diagnosis', $stateBeforeMarkAsCorrectAttempt);
     }
 
     private function getSymptomsResultingInSuccessfulDiagnosis(): void
