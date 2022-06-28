@@ -181,6 +181,72 @@ class DiagnosisTest extends TestCase
         ->assertSee('No previous diagnoses found');
     }
 
+    public function test_can_mark_previous_diagnosis_as_correct()
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $this->getSymptomsResultingInSuccessfulDiagnosis();
+
+        $this->post(route('diagnosis.diagnose', [
+            'symptoms' => $this->symptoms->pluck('ID')->toArray()
+        ]));
+
+        $previousDiagnosis = $user->diagnoses()->latest()->first();
+
+        $this->assertDatabaseHas('user_diagnosis', [
+            'id' => $previousDiagnosis->id,
+            'user_id' => $user->id,
+            'marked_as_correct' => null
+        ]);
+
+        $this->post(route('previous-diagnoses.mark-as-correct', [
+            'userDiagnosis' => $previousDiagnosis
+        ]));
+
+        $this->assertDatabaseHas('user_diagnosis', [
+            'id' => $previousDiagnosis->id,
+            'user_id' => $user->id,
+            'marked_as_correct' => true
+        ]);
+    }
+
+    public function test_cannot_mark_another_users_previous_diagnosis_as_correct()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $this->actingAs($user2);
+
+        $this->getSymptomsResultingInSuccessfulDiagnosis();
+
+        $this->post(route('diagnosis.diagnose', [
+            'symptoms' => $this->symptoms->pluck('ID')->toArray()
+        ]));
+
+        $previousDiagnosis = $user2->diagnoses()->latest()->first();
+
+        $this->assertDatabaseHas('user_diagnosis', [
+            'id' => $previousDiagnosis->id,
+            'user_id' => $user2->id,
+            'marked_as_correct' => null
+        ]);
+
+        $response = $this->actingAs($user1)
+        ->post(route('previous-diagnoses.mark-as-correct', [
+            'userDiagnosis' => $previousDiagnosis
+        ]));
+
+        $response->assertForbidden();
+
+        $this->assertDatabaseHas('user_diagnosis', [
+            'id' => $previousDiagnosis->id,
+            'user_id' => $user2->id,
+            'marked_as_correct' => null
+        ]);
+    }
+
     private function getSymptomsResultingInSuccessfulDiagnosis(): void
     {
         /**
