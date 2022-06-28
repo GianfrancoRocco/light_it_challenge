@@ -102,12 +102,12 @@ class ApiMedicService
     private function checkIfConfigIsSet()
     {
         if (
-            $this->apiMedicConfig['authUrl']
-            || $this->apiMedicConfig['authApiKey']
-            || $this->apiMedicConfig['authSecretKey']
-            || $this->apiMedicConfig['sandboxUrl']
-            || $this->apiMedicConfig['format']
-            || $this->apiMedicConfig['lang']
+            empty($this->apiMedicConfig['authUrl'])
+            || empty($this->apiMedicConfig['authApiKey'])
+            || empty($this->apiMedicConfig['authSecretKey'])
+            || empty($this->apiMedicConfig['sandboxUrl'])
+            || empty($this->apiMedicConfig['format'])
+            || empty($this->apiMedicConfig['lang'])
         ) {
             throw new ApiMedicException("There's missing data in config file");
         }
