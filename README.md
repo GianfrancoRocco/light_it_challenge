@@ -26,3 +26,7 @@ You can either fill out the registration form or use the following default login
 ## Testing
 
 You can run `php artisan test` to execute all available tests. These include the default Breeze's tests and also the challenge's specifications related tests.
+
+## Disclaimer
+
+In case run into the `cURL error 60: SSL certificate: unable to get local issuer certificate` error try the [following](https://stackoverflow.com/questions/29822686/curl-error-60-ssl-certificate-unable-to-get-local-issuer-certificate/48488736#48488736) solution
