@@ -116,6 +116,58 @@ class DiagnosisTest extends TestCase
         ->assertViewHas('diagnoses');
     }
 
+    public function test_can_see_previous_diagnosis()
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $this->getSymptomsResultingInSuccessfulDiagnosis();
+
+        $this->post(route('diagnosis.diagnose', [
+            'symptoms' => $this->symptoms->pluck('ID')->toArray()
+        ]));
+
+        $this->assertDatabaseHas('user_diagnosis', [
+            'selected_symptoms' => json_encode($this->symptoms),
+            'diagnosis' => json_encode($this->diagnosis),
+            'user_id' => $user->id
+        ]);
+
+        $response = $this->get(route('previous-diagnoses.show', [
+            'userDiagnosis' => $user->diagnoses()->first()
+        ]));
+
+        $response->assertOk()
+        ->assertViewIs('previous-diagnoses.show');
+    }
+
+    public function test_cannot_see_previous_diagnosis_belonging_to_another_user()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $this->actingAs($user2);
+
+        $this->getSymptomsResultingInSuccessfulDiagnosis();
+
+        $this->post(route('diagnosis.diagnose', [
+            'symptoms' => $this->symptoms->pluck('ID')->toArray()
+        ]));
+
+        $this->assertDatabaseHas('user_diagnosis', [
+            'selected_symptoms' => json_encode($this->symptoms),
+            'diagnosis' => json_encode($this->diagnosis),
+            'user_id' => $user2->id
+        ]);
+
+        $response = $this->actingAs($user1)->get(route('previous-diagnoses.show', [
+            'userDiagnosis' => $user2->diagnoses()->first()
+        ]));
+
+        $response->assertForbidden();
+    }
+
     public function test_can_render_previous_diagnoses_view_but_doesnt_have_previous_diagnoses()
     {
         $user = User::factory()->create();
