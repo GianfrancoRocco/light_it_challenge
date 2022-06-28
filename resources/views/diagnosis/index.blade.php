@@ -11,27 +11,29 @@
                 <!-- Validation Errors -->
                 <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-                <form method="POST">
-                    @csrf
+                @if(!empty($symptoms))
+                    <form method="POST">
+                        @csrf
 
-                    <div class="mt-4">
-                        <x-label for="symptoms" :value="__('Symptoms')" />
+                        <div class="mt-4">
+                            <x-label for="symptoms" :value="__('Symptoms')" />
 
-                        <x-select class="block mt-1 w-full" name="symptoms[]" id="symptoms" multiple>
-                            <x-slot name="content">
-                                @foreach($symptoms as $symptom)
-                                    <option value="{{$symptom['ID']}}">{{$symptom['Name']}}</option>
-                                @endforeach
-                            </x-slot>
-                        </x-select>
-                    </div>
+                            <x-select class="block mt-1 w-full" name="symptoms[]" id="symptoms" multiple>
+                                <x-slot name="content">
+                                    @foreach($symptoms as $symptom)
+                                        <option value="{{$symptom['ID']}}">{{$symptom['Name']}}</option>
+                                    @endforeach
+                                </x-slot>
+                            </x-select>
+                        </div>
 
-                    <div class="flex items-center justify-end mt-4">
-                        <x-button class="ml-4">
-                            {{ __('Run diagnosis') }}
-                        </x-button>
-                    </div>
-                </form>
+                        <div class="flex items-center justify-end mt-4">
+                            <x-button class="ml-4">
+                                {{ __('Run diagnosis') }}
+                            </x-button>
+                        </div>
+                    </form>
+                @endif
             </div>
         </div>
     </x-main-container>

@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\User;
+use App\Exceptions\ApiMedicException;
 use App\Models\UserDiagnosis;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -88,6 +88,8 @@ class ApiMedicService
 
     private function httpRequest(string $requestType, string $endpoint, array $params = [])
     {
+        $this->checkIfConfigIsSet();
+
         $defaultParams = [
             'token' => $this->getAuthToken(),
             'language' => $this->apiMedicConfig['lang'],
@@ -95,5 +97,19 @@ class ApiMedicService
         ];
 
         return Http::$requestType($this->getEndpointURL($endpoint), $defaultParams + $params)->throw()->json();
+    }
+
+    private function checkIfConfigIsSet()
+    {
+        if (
+            $this->apiMedicConfig['authUrl']
+            || $this->apiMedicConfig['authApiKey']
+            || $this->apiMedicConfig['authSecretKey']
+            || $this->apiMedicConfig['sandboxUrl']
+            || $this->apiMedicConfig['format']
+            || $this->apiMedicConfig['lang']
+        ) {
+            throw new ApiMedicException("There's missing data in config file");
+        }
     }
 }

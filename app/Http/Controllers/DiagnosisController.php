@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ApiMedicException;
 use App\Http\Requests\DiagnoseRequest;
 use App\Services\ApiMedicService;
 use Illuminate\Http\RedirectResponse;
@@ -18,22 +19,42 @@ class DiagnosisController extends Controller
 
     public function index(): View
     {
-        return view('diagnosis.index', [
-            'symptoms' => $this->apiMedicService->getSymptoms()
-        ]);
+        $errorMessage = '';
+
+        try {
+            return view('diagnosis.index', [
+                'symptoms' => $this->apiMedicService->getSymptoms()
+            ]);
+        } catch (ApiMedicException $e) {
+            $errorMessage = $e->getMessage();
+        } catch (\Throwable $e) {
+            $errorMessage = 'An error occured while fetching the symptoms';
+        }
+
+        return view('diagnosis.index')->withErrors($errorMessage);
     }
 
     public function diagnose(DiagnoseRequest $request): View|RedirectResponse
     {
-        $diagnoses = $this->apiMedicService->getDiagnosis($request->get('symptoms'));
+        $errorMessage = '';
 
-        if (!count($diagnoses)) {
-            return redirect()->route('diagnosis.index')->withErrors('No diagnoses found based on the selected symptoms');
+        try {
+            $diagnoses = $this->apiMedicService->getDiagnosis($request->get('symptoms'));
+    
+            if (!count($diagnoses)) {
+                throw new ApiMedicException('No diagnoses found based on the selected symptoms');
+            }
+
+            return view('diagnosis.result', [
+                'diagnoses' => $diagnoses,
+                'selectedSymptoms' => $this->apiMedicService->getSelectedSymptoms()
+            ]);
+        } catch (ApiMedicException $e) {
+            $errorMessage = $e->getMessage();
+        } catch (\Throwable $e) {
+            $errorMessage = 'An error occured while getting the diagnosis';
         }
 
-        return view('diagnosis.result', [
-            'diagnoses' => $diagnoses,
-            'selectedSymptoms' => $this->apiMedicService->getSelectedSymptoms()
-        ]);
+        return redirect()->route('diagnosis.index')->withErrors($errorMessage);
     }
 }
