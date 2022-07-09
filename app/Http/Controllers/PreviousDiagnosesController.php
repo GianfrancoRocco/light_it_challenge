@@ -8,11 +8,6 @@ use Illuminate\View\View;
 
 class PreviousDiagnosesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(): View
     {
         return view('previous-diagnoses.index', [

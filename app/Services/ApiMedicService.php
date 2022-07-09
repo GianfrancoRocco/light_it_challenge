@@ -6,6 +6,7 @@ use App\Exceptions\ApiMedicException;
 use App\Models\UserDiagnosis;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Countable;
 
 class ApiMedicService 
 {
@@ -86,7 +87,7 @@ class ApiMedicService
         return "{$this->apiMedicConfig['sandboxUrl']}{$endpoint}";
     }
 
-    private function httpRequest(string $requestType, string $endpoint, array $params = [])
+    private function httpRequest(string $requestType, string $endpoint, array $params = []): Countable|array
     {
         $this->checkIfConfigIsSet();
 
@@ -99,7 +100,7 @@ class ApiMedicService
         return Http::$requestType($this->getEndpointURL($endpoint), $defaultParams + $params)->throw()->json();
     }
 
-    private function checkIfConfigIsSet()
+    private function checkIfConfigIsSet(): void
     {
         if (
             empty($this->apiMedicConfig['authUrl'])
