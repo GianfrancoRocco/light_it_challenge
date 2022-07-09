@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\ApiMedicEndpoint;
 use App\Exceptions\ApiMedicException;
 use App\Models\UserDiagnosis;
 use Illuminate\Support\Facades\Cache;
@@ -44,7 +45,7 @@ class ApiMedicService
          */
 
         return Cache::remember('symptoms', 60 * 60 * 12, function () {
-            return $this->httpRequest('get', 'symptoms');
+            return $this->httpRequest('get', ApiMedicEndpoint::SYMPTOMS->value);
         });
     }
 
@@ -60,7 +61,7 @@ class ApiMedicService
             'year_of_birth' => $user->birthdate->format('Y')
         ];
 
-        $response = $this->httpRequest('get', 'diagnosis', $params);
+        $response = $this->httpRequest('get', ApiMedicEndpoint::DIAGNOSIS->value, $params);
 
         if (count($response)) {
             $this->selectedSymptoms = collect($this->getSymptoms())
