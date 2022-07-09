@@ -4,7 +4,7 @@ Hello, I'm Gianfranco, and this is my proposed solution for Light-it's challenge
 
 ## Requirements
 
-PHP >= 8.0
+PHP >= 8.1
 
 ## Steps for getting the project up and running
 
