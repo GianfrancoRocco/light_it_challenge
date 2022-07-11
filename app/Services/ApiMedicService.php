@@ -39,12 +39,7 @@ class ApiMedicService
 
     public function getSymptoms(): mixed
     {
-        /**
-         * We cache the symptoms only for 12hs just in case new symptoms get added in the
-         * span of time that goes by from when the symptoms are cached to 12hs later.
-         */
-
-        return Cache::remember('symptoms', 60 * 60 * 12, function () {
+        return Cache::remember('symptoms', now()->addHours(12), function () {
             return $this->httpRequest('get', ApiMedicEndpoint::SYMPTOMS->value);
         });
     }
