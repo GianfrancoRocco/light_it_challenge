@@ -28,7 +28,7 @@
                                     @if(!$diagnosis->marked_as_correct)
                                         <form action="{{route('previous-diagnoses.mark-as-correct', [$diagnosis])}}" method="POST">
                                             @csrf
-                                            <x-button onclick="confirm('Mark diagnosis from date {{$createdAt}} as correct?')">
+                                            <x-button onclick="return confirm('Mark diagnosis from date {{$createdAt}} as correct?')">
                                                 Mask as correct
                                             </x-button>
                                         </form>
